@@ -189,54 +189,6 @@ void printsausage(nSausage)
 	}
 }
 
-
-int ff(struct sausage list[], int nCount, int plen, int pwid) 
-{
-	struct sausage head;
-	int totalTime, minTotalTime;
-	int i;
-
-	if(nCount == 2)
-	{
-		int time01, time10;
-		time01 = time10 = 0;
-
-		/* 01 */
-		if ((plen > list[0].length) || (pwid > list[0].width)) time01++;
-		if ((list[0].length > list[1].length) || (list[0].width > list[1].width)) time01++;
-
-		/* 10 */
-		if ((plen > list[1].length) || (pwid > list[1].width)) time10++;
-		if ((list[1].length > list[0].length) || (list[1].width > list[0].width)) time10++;
-
-		if (time01 < time10) return time01;
-		else return time10; 
-	}
-	
-	totalTime = 0;
-	minTotalTime = 10000;
-	for(i=0;i<nCount;i++)
-	{
-		int time = 0;
-		head = list[i];
-		if((head.length < plen) || (head.width < pwid))
-		{
-			time = 1;
-		}
-		
-		list[i] = list[nCount-1];
-		
-		totalTime = time + ff(list, nCount-1, head.length, head.width);
-		
-		list[i] = head;
-		if(minTotalTime > totalTime)
-		{
-			minTotalTime = totalTime;
-		} 
-	}
-	return minTotalTime;
-}
-
 int main()
 {
 	int i;
@@ -252,25 +204,22 @@ int main()
 		sausage[i].width = width;
 	}
 
-/*
 	sort_sausage_length(nSausage);
 
 	process(nSausage);
+	
 	ooocount = ooo_count;
 	pooocount = 0;
+	
 	while(pooocount != ooocount)
 	{
-	pooocount = ooocount;
-	f(0);
+		pooocount = ooocount;
+		f(0);
 
-	find_ooo_sausage(nSausage);
-	ooocount = ooo_count;
+		find_ooo_sausage(nSausage);
+		ooocount = ooo_count;
 	}
-*/
 
-/*
-	ooo_count = ff(sausage, nSausage, 0, 0);
-*/
 	printf("%d\n", ooo_count+1);
 
 	return 0;
